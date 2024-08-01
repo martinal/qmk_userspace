@@ -43,7 +43,7 @@
 #    define MC_M MT(MOD_RCTL, KC_M)
 #    define MC_COMM MT(MOD_RSFT, KC_COMM)
 #    define MC_DOT MT(MOD_LALT, KC_DOT)
-#    define MC_SCLN MT(MOD_RGUI, KC_SCLN)
+#    define MC_SLSH MT(MOD_RGUI, KC_SLSH)
 #endif
 
 #ifdef BOTROW_GACS
@@ -55,7 +55,7 @@
 #    define MC_M MT(MOD_RSFT, KC_M)
 #    define MC_COMM MT(MOD_RCTL, KC_COMM)
 #    define MC_DOT MT(MOD_LALT, KC_DOT)
-#    define MC_SCLN MT(MOD_RGUI, KC_SCLN)
+#    define MC_SLSH MT(MOD_RGUI, KC_SLSH)
 #endif
 
 // Fill in missing

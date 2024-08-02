@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 
-// #include "/home/msa/qmk_firmware/build/obj_massdrop_alt_martinal/src/default_keyboard.h"
+#include "features/achordion.h"
+
 
 //
 // Docs:
@@ -157,8 +158,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTL))
 #define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
 
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
+
+    // https://getreuer.info/posts/keyboards/achordion/index.html
+    // https://raw.githubusercontent.com/getreuer/qmk-keymap/main/features/achordion.h
+    // https://raw.githubusercontent.com/getreuer/qmk-keymap/main/features/achordion.c
+    if (!process_achordion(keycode, record)) {
+        return false;
+    }
 
     switch (keycode) {
         case U_T_AUTO:
@@ -225,4 +234,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         default:
             return true; // Process all other keycodes normally
     }
+}
+
+void matrix_scan_user(void) {
+    achordion_task();
+}
+
+bool achordion_chord(
+    uint16_t tap_hold_keycode,
+    keyrecord_t* tap_hold_record,
+    uint16_t other_keycode,
+    keyrecord_t* other_record
+) {
+    // Accept some keys as hold keys event if same hand
+    switch (tap_hold_keycode) {
+    /* case KC_ESC: */
+    /* case KC_TAB: */
+    /* case KC_CAPS: */
+    case ESC_CTL:
+    case TAB_LAY:
+        return true;
+    }
+
+    return achordion_opposite_hands(tap_hold_record, other_record);
 }

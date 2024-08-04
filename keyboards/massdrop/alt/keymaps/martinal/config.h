@@ -4,7 +4,7 @@
 // default 200 is too long for caps as esc
 // Using Fn+x Fn+c Fn+v to reduce, increase, print this value
 // 140 seems ok
-#define TAPPING_TERM 200
+#define TAPPING_TERM 180
 
 // finetuning per-key config, see get_tapping_term in keymap.c
 #define TAPPING_TERM_PER_KEY
@@ -12,3 +12,9 @@
 #define PERMISSIVE_HOLD
 
 // #define UNICODE_SELECTED_MODES UNICODE_MODE_BSD, UNICODE_MODE_MACOS, UNICODE_MODE_LINUX
+
+// TODO: Streaks somehow block z+h as gui+h
+// unless z+; pressed first
+// then keep holding z and +h works fine
+//
+// #define ACHORDION_STREAK

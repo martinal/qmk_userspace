@@ -18,6 +18,7 @@ enum alt_keycodes {
     MD_BOOT,               // Restart into bootloader after hold timeout
 };
 
+// TODO: reduce tapping term for zxcv to make eager mods + mouse nicer?
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         /* case SFT_T(KC_SPC): */
@@ -246,7 +247,7 @@ bool achordion_chord(
     uint16_t other_keycode,
     keyrecord_t* other_record
 ) {
-    // Accept some keys as hold keys event if same hand
+    // Accept keys on the side as hold keys event if same hand
     switch (tap_hold_keycode) {
     /* case KC_ESC: */
     /* case KC_TAB: */
@@ -258,3 +259,74 @@ bool achordion_chord(
 
     return achordion_opposite_hands(tap_hold_record, other_record);
 }
+
+bool achordion_eager_mod(uint8_t mod) {
+    // Eagerly apply mods on mod-taps,
+    // pro: makes mods work with mouse,
+    // con: sends noisy mod on/off events
+    switch (mod) {
+    case MOD_LSFT:
+    case MOD_RSFT:
+    case MOD_LALT:
+    case MOD_RALT:
+    case MOD_LCTL:
+    case MOD_RCTL:
+    case MOD_LGUI:
+    case MOD_RGUI:
+        return true;
+    }
+    return false;
+}
+
+// Define in config.h
+#ifdef ACHORDION_STREAK
+
+// How fast should a streak timeout?
+uint16_t achordion_streak_chord_timeout(
+    uint16_t tap_hold_keycode, uint16_t next_keycode) {
+    if (IS_QK_LAYER_TAP(tap_hold_keycode)) {
+        return 0;  // Disable streak detection on layer-tap keys.
+    }
+
+    // Otherwise, tap_hold_keycode is a mod-tap key.
+    uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(tap_hold_keycode));
+    if ((mod & MOD_LSFT) != 0) {
+        return 100;  // A shorter streak timeout for Shift mod-tap keys.
+    }
+
+    // 200 is default
+    return 200;
+}
+
+// Which keys can be part of a streak?
+bool achordion_streak_continue(uint16_t keycode) {
+    // If mods other than shift or AltGr are held, don't continue the streak.
+    if (get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) {
+        return false;
+    }
+
+    // This function doesn't get called for holds, so convert to tap keycodes.
+    if (IS_QK_MOD_TAP(keycode)) {
+        keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
+    } else if (IS_QK_LAYER_TAP(keycode)) {
+        keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+    }
+
+    // Regular letters continue the streak.
+    if (keycode >= KC_A && keycode <= KC_Z) {
+        return true;
+    }
+
+    // Regular punctuation continue the streak.
+    switch (keycode) {
+    case KC_DOT:
+    case KC_COMMA:
+    case KC_QUOTE:
+    case KC_SPACE:
+        return true;
+    }
+
+    // All other keys end the streak.
+    return false;
+}
+#endif

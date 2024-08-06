@@ -257,7 +257,16 @@ bool achordion_chord(
         return true;
     }
 
-    return achordion_opposite_hands(tap_hold_record, other_record);
+    // Otherwise don't accept mods and keys on opposite hands
+    bool opposite = achordion_opposite_hands(tap_hold_record, other_record);
+    // achordion_opposite_hands is wrong for H, Y, 6 on Massdrop Alt
+    switch (other_keycode) {
+    case KC_H:
+    case KC_Y:
+    case KC_6:
+        return !opposite;
+    }
+    return opposite;
 }
 
 bool achordion_eager_mod(uint8_t mod) {

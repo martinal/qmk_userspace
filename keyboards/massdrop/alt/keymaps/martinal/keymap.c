@@ -31,15 +31,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 enum my_layers {
-    L_DF = 0, // Default
-    L_FN = 1, // Function
-    L_ML = 2, // Metalayer
-    L_NU = 3, // Number
-    L_MS = 4, // Mouse
-    L_AR = 5, // Arrows
-    L_FX = 6, // Fx keys
-    L_ME = 7, // Media keys
-    L_SY = 8, // Symbols
+    L_DF = 0, // Default    G|H + D  homerow
+    L_FN = 1, // Function   hold Fn
+    L_ML = 2, // Metalayer  hold G|H
+    L_NU = 3, // Number     G|H + N|J
+    L_MS = 4, // Mouse      G|H + U|K
+    L_AR = 5, // Arrows     G|H + A  homerow
+    L_FX = 6, // Fx keys    G|H + F  homerow
+    L_ME = 7, // Media keys G|H + M|L
+    L_SY = 8, // Symbols    G|H + S  homerow
 };
 
 // Shortcut for to default layer
@@ -47,15 +47,19 @@ enum my_layers {
 
 // Mod-taps
 
+// Tap caps lock for esc or escape, hold for control
+#define ESC_CTL MT(MOD_LCTL, KC_ESC)
+// Tap caps lock to go back to default layer
+#define DEF_CTL TO(L_DF)
+
 // Hold tab for meta-layer, tap for tab
 #define TAB_LAY LT(L_ML, KC_TAB)
 // Hold tab for meta-layer
 #define LAY_LAY MO(L_ML)
 
-// Tap caps lock for esc or escape, hold for control
-#define ESC_CTL MT(MOD_LCTL, KC_ESC)
-// Tap caps lock to go back to default layer
-#define DEF_CTL TO(L_DF)
+// Hold G/H for meta-layer, tap for G/H
+/* #define MC_G LT(L_ML, KC_G) */
+/* #define MC_H LT(L_ML, KC_H) */
 
 // Pick homerow mods config
 #include "homerow.h"
@@ -100,9 +104,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Metalayer
     [L_ML] = LAYOUT_65_ansi_blocker(
          TO_DEF, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(L_ME),TO(L_MS),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(L_FX),TO(L_AR),TO(L_NU),TO(L_SY),XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,          XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(L_MS),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, TO(L_AR),TO(L_SY), TO_DEF, TO(L_FX),XXXXXXX, XXXXXXX, TO(L_NU),TO(L_ME),TO(L_MS),XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(L_NU),TO(L_ME),XXXXXXX, XXXXXXX, XXXXXXX, _______,          XXXXXXX, XXXXXXX,
         _______, _______, _______,                            _______,                            _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     // K L_NU Numbers

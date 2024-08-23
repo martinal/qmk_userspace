@@ -2,7 +2,6 @@
 
 #include "features/achordion.h"
 
-
 //
 // Docs:
 // https://docs.qmk.fm/feature_layers#switching-and-toggling-layers
@@ -17,18 +16,6 @@ enum alt_keycodes {
     DBG_MOU,               // DEBUG Toggle Mouse Prints
     MD_BOOT,               // Restart into bootloader after hold timeout
 };
-
-// TODO: reduce tapping term for zxcv to make eager mods + mouse nicer?
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        /* case SFT_T(KC_SPC): */
-        /*     return TAPPING_TERM + 1250; */
-        /* case LT(1, KC_GRV): */
-        /*     return 130; */
-        default:
-            return TAPPING_TERM;
-    }
-}
 
 enum my_layers {
     L_DF = 0, // Default    G|H + D  homerow
@@ -57,12 +44,26 @@ enum my_layers {
 // Hold tab for meta-layer
 #define LAY_LAY MO(L_ML)
 
-// Hold G/H for meta-layer, tap for G/H
-/* #define MC_G LT(L_ML, KC_G) */
-/* #define MC_H LT(L_ML, KC_H) */
+////////////////////////////////////////////////////////////////////
+//
+// Layer-taps for inner keys
+#define MC_T LT(L_ML, KC_T)
+#define MC_Y LT(L_ML, KC_Y)
+
+#define MC_G LT(L_NU, KC_G)
+#define MC_H LT(L_NU, KC_H)
+
+#define MC_B LT(L_SY, KC_B)
+#define MC_N LT(L_SY, KC_N)
+
 
 // Pick homerow mods config
+#define BOTROW_GASC
+
+// This defines the homerow mods and fills in MC_* = KC_* for the  rest
 #include "homerow.h"
+//
+////////////////////////////////////////////////////////////////////
 
 /* QK_DYNAMIC_TAPPING_TERM_PRINT  DT_PRNT	Types the current tapping term, in milliseconds */
 /* QK_DYNAMIC_TAPPING_TERM_UP     DT_UP	    Increases the current tapping term by DYNAMIC_TAPPING_TERM_INCREMENTms (5ms by default) */
@@ -295,16 +296,15 @@ bool achordion_eager_mod(uint8_t mod) {
 #ifdef ACHORDION_STREAK
 
 // How fast should a streak timeout?
-uint16_t achordion_streak_chord_timeout(
-    uint16_t tap_hold_keycode, uint16_t next_keycode) {
+uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode, uint16_t next_keycode) {
     if (IS_QK_LAYER_TAP(tap_hold_keycode)) {
-        return 0;  // Disable streak detection on layer-tap keys.
+        return 0; // Disable streak detection on layer-tap keys.
     }
 
     // Otherwise, tap_hold_keycode is a mod-tap key.
     uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(tap_hold_keycode));
     if ((mod & MOD_LSFT) != 0) {
-        return 100;  // A shorter streak timeout for Shift mod-tap keys.
+        return 100; // A shorter streak timeout for Shift mod-tap keys.
     }
 
     // 200 is default

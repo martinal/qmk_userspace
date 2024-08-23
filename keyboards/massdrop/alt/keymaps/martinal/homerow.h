@@ -1,12 +1,4 @@
-// Pick homerow mods config to enable
-// (could also add combo mods like top is plain bot is shifted)
-
-// #define TOPROW_GASC
-
-// #define HOMEROW_GASC
-
-// #define BOTROW_GASC
-#define BOTROW_GACS
+// Define one homerow mods config to enable
 
 #ifdef TOPROW_GASC
 #    define MC_Q MT(MOD_LGUI, KC_Q)
@@ -56,6 +48,18 @@
 #    define MC_COMM MT(MOD_RCTL, KC_COMM)
 #    define MC_DOT MT(MOD_LALT, KC_DOT)
 #    define MC_SLSH MT(MOD_RGUI, KC_SLSH)
+#endif
+
+#ifdef BOTROW_SAGC
+#    define MC_Z MT(MOD_LSFT, KC_Z)
+#    define MC_X MT(MOD_LCTL, KC_X)
+#    define MC_C MT(MOD_LALT, KC_C)
+#    define MC_V MT(MOD_LGUI, KC_V)
+
+#    define MC_M MT(MOD_RGUI, KC_M)
+#    define MC_COMM MT(MOD_LALT, KC_COMM)
+#    define MC_DOT MT(MOD_RCTL, KC_DOT)
+#    define MC_SLSH MT(MOD_RSFT, KC_SLSH)
 #endif
 
 // Fill in missing

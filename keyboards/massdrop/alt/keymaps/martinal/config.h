@@ -4,7 +4,7 @@
 // default 200 is too long for caps as esc
 // Using Fn+x Fn+c Fn+v to reduce, increase, print this value
 // 140 seems ok
-#define TAPPING_TERM 180
+#define TAPPING_TERM 140
 
 // finetuning per-key config, see get_tapping_term in keymap.c
 #define TAPPING_TERM_PER_KEY

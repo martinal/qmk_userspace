@@ -47,15 +47,15 @@ enum my_layers {
 ////////////////////////////////////////////////////////////////////
 //
 // Layer-taps for inner keys
-#define MC_T LT(L_ML, KC_T)
-#define MC_Y LT(L_ML, KC_Y)
-
-#define MC_G LT(L_NU, KC_G)
-#define MC_H LT(L_NU, KC_H)
-
-#define MC_B LT(L_SY, KC_B)
-#define MC_N LT(L_SY, KC_N)
-
+// FIXME: This breaks e.g. modtap-shift + h
+/* #define MC_T LT(L_ML, KC_T) */
+/* #define MC_Y LT(L_ML, KC_Y) */
+/**/
+/* #define MC_G LT(L_NU, KC_G) */
+/* #define MC_H LT(L_NU, KC_H) */
+/**/
+/* #define MC_B LT(L_SY, KC_B) */
+/* #define MC_N LT(L_SY, KC_N) */
 
 // Pick homerow mods config
 #define BOTROW_GASC

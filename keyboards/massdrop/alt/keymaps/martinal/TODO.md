@@ -4,6 +4,15 @@ Configuration docs:
 
 Keyboard plan:
 
+- use HOLD_ON_OTHER_KEY_PRESS_PER_KEY for non-alpha mod taps
+- figure out streak issue
+
+- Voyager inspired \ at [ position, []{} on layer
+- numbers on layer
+- fn on layer
+- nav keys on layer
+
+- TODO: Disable DYNAMIC_TAPPING_TERM_ENABLE after finding a good value
 - rgpb tuning, layer specific
 - Setup tap hold homerow mods
 - Norwegian letters from english layout?

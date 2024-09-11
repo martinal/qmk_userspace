@@ -1,15 +1,16 @@
 #pragma once
 
 // https://docs.qmk.fm/tap_hold
-// default 200 is too long for caps as esc
+// Default is 200
 // Using Fn+x Fn+c Fn+v to reduce, increase, print this value
-// 140 seems ok
-#define TAPPING_TERM 140
+#define TAPPING_TERM 200
 
 // finetuning per-key config, see get_tapping_term in keymap.c
-#define TAPPING_TERM_PER_KEY
+// #define TAPPING_TERM_PER_KEY
 
 #define PERMISSIVE_HOLD
+// #define PERMISSIVE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // #define UNICODE_SELECTED_MODES UNICODE_MODE_BSD, UNICODE_MODE_MACOS, UNICODE_MODE_LINUX
 

@@ -58,7 +58,7 @@ enum my_layers {
 /* #define MC_N LT(L_SY, KC_N) */
 
 // Pick homerow mods config
-#define BOTROW_GASC
+#define BOTROW_GACS
 
 // This defines the homerow mods and fills in MC_* = KC_* for the  rest
 #include "homerow.h"
@@ -86,6 +86,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //     _______, RGB_TOG, _______, _______, _______, MD_BOOT, NK_TOGG, DBG_TOG, _______, _______, _______, _______,          KC_PGUP, KC_VOLD,
     //     _______, _______, _______,                            _______,                            _______, _______, KC_HOME, KC_PGDN, KC_END
     // ),
+    // Base layer
+    //[L_DF] = LAYOUT_65_ansi_blocker(
+    //    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
+    //    TAB_LAY, MC_Q,    MC_W,    MC_E,    MC_R,    MC_T,    MC_Y,    MC_U,    MC_I,    MC_O,    MC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
+    //    ESC_CTL, MC_A,    MC_S,    MC_D,    MC_F,    MC_G,    MC_H,    MC_J,    MC_K,    MC_L,    MC_SCLN, KC_QUOT,          KC_ENT,  KC_PGUP,
+    //    KC_LSFT, MC_Z,    MC_X,    MC_C,    MC_V,    MC_B,    MC_N,    MC_M,    MC_COMM, MC_DOT,  MC_SLSH, KC_RSFT,          KC_UP,   KC_PGDN,
+    //    KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, MO(L_FN),KC_LEFT, KC_DOWN, KC_RGHT
+    //),
     // Base layer
     [L_DF] = LAYOUT_65_ansi_blocker(
         KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
@@ -341,5 +349,46 @@ bool achordion_streak_continue(uint16_t keycode) {
 
     // All other keys end the streak.
     return false;
+}
+#endif
+
+// TODO:
+/* #ifdef TAPPING_TERM_PER_KEY */
+/* uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) { */
+/*     switch (keycode) { */
+/*         case SFT_T(KC_SPC): */
+/*            return g_tapping_term + 1250; */
+/*         case LT(1, KC_GRV): */
+/*             return 130; */
+/*         default: */
+/*             return g_tapping_term; */
+/*     } */
+/* } */
+/* #endif */
+
+/* #ifdef PERMISSIVE_HOLD_PER_KEY */
+/* bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) { */
+/*     switch (keycode) { */
+        /* case LT(1, KC_BSPC): */
+        /*     // Immediately select the hold action when another key is tapped. */
+        /*     return true; */
+/*         default: */
+/*             // Do not select the hold action when another key is tapped. */
+/*             return false; */
+/*     } */
+/* } */
+/* #endif */
+
+#ifdef HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case ESC_CTL:
+        case TAB_LAY:
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
 }
 #endif

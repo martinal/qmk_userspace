@@ -1,3 +1,4 @@
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
 
 #include "features/achordion.h"
@@ -69,6 +70,71 @@ enum my_layers {
 /* QK_DYNAMIC_TAPPING_TERM_UP     DT_UP	    Increases the current tapping term by DYNAMIC_TAPPING_TERM_INCREMENTms (5ms by default) */
 /* QK_DYNAMIC_TAPPING_TERM_DOWN	  DT_DOWN	Decreases the current tapping term by DYNAMIC_TAPPING_TERM_INCREMENTms (5ms by default) */
 
+/*
+LAYER main:
+
+Whitespace:
+space, backspace, delete, enter, tab, esc
+
+           KC_BSLS
+Plain            \
+Shifted          |
+
+           C_COMM  KC_DOT  KC_SLSH
+Plain           ,       .        /
+Shifted         <       >        ?
+
+          KC_SCLN  KC_QUOT
+Plain           ;        '
+Shifted         :        "
+
+(Fn+Esc)  KC_GRV
+Plain          `
+Shifted        ~
+
+
+LAYER numbers and number symbols:
+
+          KC_1     KC_2     KC_3     KC_4     KC_5     KC_6     KC_7     KC_8     KC_9     KC_0  KC_MINS  KC_EQL
+Plain        1        2        3        4        5        6        7        8        9        0        -       =
+Shifted      !        @        #        $        %        ^        &        *        (        )        _       +
+
+
+LAYER additional symbols
+
+          KC_LBRC  KC_RBRC   KC_MINS  KC_EQL
+Plain           [        ]         -       =
+Shifted         {        }         _       +
+
+Also:
+umlaut?
+æøå usually on ';[
+
+
+LAYER Fx keys:
+
+F1-12
+
+
+LAYER: navigation:
+Home        o
+End         e
+PgUp        u
+PgDn        d
+left        h
+down        j
+up          k
+right       l
+ctrl+left   b
+ctrl+right  w
+
+
+LAYER system/media:
+play controls, volume, light, power, ...
+
+*/
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // // Default base layer
     // [L_DF] = LAYOUT_65_ansi_blocker(
@@ -87,21 +153,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //     _______, _______, _______,                            _______,                            _______, _______, KC_HOME, KC_PGDN, KC_END
     // ),
     // Base layer
-    //[L_DF] = LAYOUT_65_ansi_blocker(
-    //    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
-    //    TAB_LAY, MC_Q,    MC_W,    MC_E,    MC_R,    MC_T,    MC_Y,    MC_U,    MC_I,    MC_O,    MC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
-    //    ESC_CTL, MC_A,    MC_S,    MC_D,    MC_F,    MC_G,    MC_H,    MC_J,    MC_K,    MC_L,    MC_SCLN, KC_QUOT,          KC_ENT,  KC_PGUP,
-    //    KC_LSFT, MC_Z,    MC_X,    MC_C,    MC_V,    MC_B,    MC_N,    MC_M,    MC_COMM, MC_DOT,  MC_SLSH, KC_RSFT,          KC_UP,   KC_PGDN,
-    //    KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, MO(L_FN),KC_LEFT, KC_DOWN, KC_RGHT
-    //),
-    // Base layer
     [L_DF] = LAYOUT_65_ansi_blocker(
-        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
         TAB_LAY, MC_Q,    MC_W,    MC_E,    MC_R,    MC_T,    MC_Y,    MC_U,    MC_I,    MC_O,    MC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
         ESC_CTL, MC_A,    MC_S,    MC_D,    MC_F,    MC_G,    MC_H,    MC_J,    MC_K,    MC_L,    MC_SCLN, KC_QUOT,          KC_ENT,  KC_PGUP,
         KC_LSFT, MC_Z,    MC_X,    MC_C,    MC_V,    MC_B,    MC_N,    MC_M,    MC_COMM, MC_DOT,  MC_SLSH, KC_RSFT,          KC_UP,   KC_PGDN,
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, MO(L_FN),KC_LEFT, KC_DOWN, KC_RGHT
     ),
+    // Base layer
+    //[L_DF] = LAYOUT_65_ansi_blocker(
+    //    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
+    //    TAB_LAY, MC_Q,    MC_W,    MC_E,    MC_R,    MC_T,    MC_Y,    MC_U,    MC_I,    MC_O,    MC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
+    //    ESC_CTL, MC_A,    MC_S,    MC_D,    MC_F,    MC_G,    MC_H,    MC_J,    MC_K,    MC_L,    MC_SCLN, KC_QUOT,          KC_ENT,  KC_PGUP,
+    //    _______, MC_Z,    MC_X,    MC_C,    MC_V,    MC_B,    MC_N,    MC_M,    MC_COMM, MC_DOT,  MC_SLSH, _______,          KC_UP,   KC_PGDN,
+    //    _______, _______, _______,                            KC_SPC,                             KC_RALT, MO(L_FN),KC_LEFT, KC_DOWN, KC_RGHT
+    //),
     // Fn key layer
     [L_FN] = LAYOUT_65_ansi_blocker(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, KC_MUTE,
